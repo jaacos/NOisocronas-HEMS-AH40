@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SUC HEMS - Ficha de Isócronas</title>
+    
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SUC HEMS">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#D32F2F">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+        @media print {
+            body { background: white; color: black; font-size: 11px; }
+            .no-print { display: none !important; }
+            .print-card { border: 1px solid #cbd5e1 !important; box-shadow: none !important; break-inside: avoid; border-radius: 8px !important; }
+            .print-header { background-color: #d32f2f !important; color: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col select-none">
+
+    <header class="bg-[#D32F2F] text-white shadow-md print-header sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-4 w-full sm:w-auto">
+                <div class="w-44 h-16 bg-white p-1 rounded-xl shadow-md flex items-center justify-center overflow-hidden shrink-0">
+                    <img id="suc-logo-main" src="data:image/jpeg;base64,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" alt="Logo SUC" class="w-full h-full object-contain block">
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-none">SUC HEMS</h1>
+                    <p class="text-red-100 text-xs font-semibold tracking-wider uppercase mt-1">Soporte Vital Avanzado Aéreo</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 w-full sm:w-auto justify-end no-print">
+                <div id="offline-badge" class="hidden bg-amber-500 text-white text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-sm">
+                    <i data-lucide="wifi-off" class="w-3.5 h-3.5"></i> Offline
+                </div>
+                <button onclick="window.print()" class="bg-white/15 hover:bg-white/25 border border-white/20 text-white font-semibold px-3 py-1.5 rounded-lg transition flex items-center gap-2 text-xs">
+                    <i data-lucide="printer" class="w-4 h-4"></i> Imprimir
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 py-6 sm:px-6 lg:px-8 w-full">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="lg:col-span-2 bg-gradient-to-r from-red-50 to-orange-50 p-5 rounded-2xl border border-red-100 shadow-sm flex gap-4 print-card">
+                <div class="p-3 bg-[#D32F2F] text-white rounded-xl h-fit shadow-sm"><i data-lucide="clock" class="w-6 h-6"></i></div>
+                <div>
+                    <h3 class="font-bold text-red-900 text-base mb-1">Cálculo de Tiempos Operacionales</h3>
+                    <p class="text-xs text-red-800 leading-relaxed">El tiempo de tránsito aéreo requiere contemplar dos procesos de encendido:</p>
+                    <ul class="list-disc pl-4 mt-2 text-xs text-red-800 space-y-1">
+                        <li><strong>Fase de Ida (Base → Incidente)</strong>: 4 a 7 minutos de movilización y encendido del motor.</li>
+                        <li><strong>Fase de Retorno (Incidente → Hospital)</strong>: 3 minutos adicionales para arranque e inicio de sustentación.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 p-5 rounded-2xl border border-blue-100 shadow-sm flex gap-3 print-card">
+                <div class="p-3 bg-blue-600 text-white rounded-xl h-fit shadow-sm"><i data-lucide="shield-check" class="w-5 h-5"></i></div>
+                <div class="flex flex-col justify-between">
+                    <div>
+                        <h4 class="font-bold text-blue-900 text-sm mb-1">Arranque en Escena</h4>
+                        <p class="text-xs text-blue-800 leading-relaxed">Maniobras de carga e inicio en caliente: <strong>3 minutos</strong> antes de tomar rumbo al hospital receptor.</p>
+                    </div>
+                    <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider mt-2 block">Criterio Técnico SUC</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-8 no-print">
+            <div class="border-l-4 border-[#D32F2F] pl-4 mb-4">
+                <h3 class="text-lg font-bold text-slate-800">Arranque Inicial</h3>
+                <p class="text-xs text-slate-500">Ajusta los minutos desde alerta hasta despegue.</p>
+            </div>
+            <label class="block text-sm font-semibold text-slate-700 mb-2 flex justify-between">
+                <span>Tiempo de Movilización (Ida):</span>
+                <span id="mobilization-val" class="text-[#D32F2F] font-bold">5 minutos</span>
+            </label>
+            <input type="range" id="mobilization-slider" min="4" max="7" value="5" step="1" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#D32F2F] py-1">
+            <div class="flex justify-between text-xs text-slate-400 mt-1">
+                <span>4 min (Rotor caliente)</span>
+                <span>7 min (Límite frío)</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden mb-8 print-card">
+            <div class="p-5 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print-header">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-800">Isócronas Oficiales</h3>
+                    <p class="text-xs text-slate-500">Datos verificados del helicóptero medicalizado.</p>
+                </div>
+                <span class="bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full border border-blue-200">+3 min Arranque en Escena</span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="bg-slate-100/70 border-b border-slate-200 text-xs font-bold text-slate-600 uppercase tracking-wider">
+                            <th class="p-4 pl-6">Lugar</th><th class="p-4 text-center">Ida (Min)</th><th class="p-4 text-center bg-red-50/50 text-[#D32F2F]">Arranque</th><th class="p-4 text-center font-bold text-red-700">Llegada</th><th class="p-4 text-center">Hospital</th><th class="p-4 text-center bg-blue-50/50 text-blue-700">Arranque</th><th class="p-4 text-center bg-slate-100">Total</th><th class="p-4 text-right pr-6">Terrestre</th>
+                        </tr>
+                    </thead>
+                    <tbody id="isocronas-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-xs no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="flex items-center gap-3">
+                <span>&copy; 2026 Servicio de Urgencias Canario (SUC).</span>
+            </div>
+            <span class="text-slate-500 font-bold uppercase tracking-wider">Uso institucional HEMS</span>
+        </div>
+    </footer>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(() => console.log('✓ PWA registrada')).catch(() => {});
+            });
+        }
+
+        const dataSet = [
+            { location: "Arico / Porís / Tajao", flightIn: 5, hospBack: 12, groundSva: 35 },
+            { location: "Vilaflor", flightIn: 7, hospBack: 18, groundSva: 45 },
+            { location: "Fasnia", flightIn: 8, hospBack: 10, groundSva: 30 },
+            { location: "Alcalá / Playa San Juan", flightIn: 8, hospBack: 25, groundSva: 55 },
+            { location: "Chío / Masca / Palmar", flightIn: 12, hospBack: 23, groundSva: 70 },
+            { location: "Base teleférico Teide", flightIn: 12, hospBack: 12, groundSva: 60 },
+            { location: "Buenavista / Silos / Teno", flightIn: 14, hospBack: 18, groundSva: 65 },
+            { location: "La Guancha", flightIn: 18, hospBack: 11, groundSva: 45 },
+            { location: "Puerto de la Cruz", flightIn: 18, hospBack: 9, groundSva: 40 },
+            { location: "Taganana", flightIn: 24, hospBack: 5, groundSva: 45 }
+        ];
+
+        let currentMobilization = 5;
+        const currentStartupBack = 3;
+        const slider = document.getElementById('mobilization-slider');
+        const mobilizationVal = document.getElementById('mobilization-val');
+        const isocronasTbody = document.getElementById('isocronas-tbody');
+
+        function updateOnlineStatus() {
+            const badge = document.getElementById('offline-badge');
+            if (!navigator.onLine) badge.classList.remove('hidden');
+            else badge.classList.add('hidden');
+        }
+
+        function renderTable() {
+            isocronasTbody.innerHTML = '';
+            dataSet.forEach(item => {
+                const arrivalTime = item.flightIn + currentMobilization;
+                const totalHemsTime = arrivalTime + item.hospBack + currentStartupBack;
+                const timeSaved = item.groundSva - totalHemsTime;
+                let savingClass = timeSaved > 0 ? "text-green-600 font-bold bg-green-50 border-green-100" : "text-amber-600 font-semibold bg-amber-50 border-amber-100";
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-50/80 transition-colors";
+                tr.innerHTML = `
+                    <td class="p-4 pl-6 font-semibold text-slate-800">${item.location}</td>
+                    <td class="p-4 text-center">${item.flightIn}</td>
+                    <td class="p-4 text-center bg-red-50/50 text-[#D32F2F]">+${currentMobilization}</td>
+                    <td class="p-4 text-center text-red-700 font-extrabold">${arrivalTime}</td>
+                    <td class="p-4 text-center">${item.hospBack}</td>
+                    <td class="p-4 text-center bg-blue-50/50 text-blue-700">+${currentStartupBack}</td>
+                    <td class="p-4 text-center bg-slate-100 font-black">${totalHemsTime}</td>
+                    <td class="p-4 text-right pr-6"><span class="text-xs">${item.groundSva}</span><br><span class="text-[10px] px-2 py-1 rounded border ${savingClass}">${timeSaved > 0 ? `+${timeSaved}m` : 'Asim'}</span></td>
+                `;
+                isocronasTbody.appendChild(tr);
+            });
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        slider?.addEventListener('input', (e) => {
+            currentMobilization = parseInt(e.target.value);
+            mobilizationVal.textContent = `${currentMobilization} minutos`;
+            renderTable();
+        });
+
+        window.addEventListener('online', updateOnlineStatus);
+        window.addEventListener('offline', updateOnlineStatus);
+
+        window.addEventListener('load', () => {
+            if (window.lucide) window.lucide.createIcons();
+            updateOnlineStatus();
+            renderTable();
+        });
+    </script>
+</body>
+</html>
