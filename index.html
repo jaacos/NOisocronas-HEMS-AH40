@@ -109,18 +109,18 @@
                 <span class="bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full border border-blue-200">+3 min Arranque Escena</span>
             </div>
 
-            <div class="w-full overflow-x-auto">
-                <table class="w-full text-left border-collapse text-xs sm:text-sm">
-                    <thead>
-                        <tr class="bg-slate-100/70 border-b border-slate-200 text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
-                            <th class="p-2 sm:p-4 pl-3 sm:pl-6">Municipio</th>
-                            <th class="p-2 sm:p-4 text-center">TFS (min)</th>
-                            <th class="p-2 sm:p-4 text-center bg-red-50/50 text-[#D32F2F]">Hosp (min)</th>
-                            <th class="p-2 sm:p-4 text-center">Terrestre (min)</th>
-                            <th class="p-2 sm:p-4 text-center bg-slate-100 font-extrabold text-slate-800">Total HEMS</th>
-                            <th class="p-2 sm:p-4 text-right pr-3 sm:pr-6">Ahorro</th>
-                        </tr>
-                    </thead>
+           <div class="w-full overflow-x-auto max-h-[500px] overflow-y-auto">
+    <table class="w-full text-left border-collapse text-xs sm:text-sm">
+        <thead class="sticky top-0 z-10 shadow-sm">
+            <tr class="bg-slate-100 border-b border-slate-200 text-[10px] sm:text-xs font-bold text-slate-600 uppercase tracking-wider">
+                <th class="p-2 sm:p-4 pl-3 sm:pl-6 bg-slate-100">Municipio</th>
+                <th class="p-2 sm:p-4 text-center bg-slate-100">TFS (min)</th>
+                <th class="p-2 sm:p-4 text-center bg-red-100/90 text-[#D32F2F]">Hosp (min)</th>
+                <th class="p-2 sm:p-4 text-center bg-slate-100">Terrestre (min)</th>
+                <th class="p-2 sm:p-4 text-center bg-slate-200 font-extrabold text-slate-800">Total HEMS</th>
+                <th class="p-2 sm:p-4 text-right pr-3 sm:pr-6 bg-slate-100">Ahorro</th>
+            </tr>
+        </thead>
                     <tbody id="isocronas-tbody" class="divide-y divide-slate-100"></tbody>
                 </table>
             </div>
