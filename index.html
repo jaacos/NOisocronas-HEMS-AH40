@@ -36,7 +36,7 @@
 </div>
                 <div>
                     <h1 class="text-xl sm:text-2xl font-black tracking-tight leading-none">SUC HEMS</h1>
-                    <p class="text-red-100 text-xs font-semibold tracking-wider uppercase mt-1">Isócronas Tenerife - 30 Municipios</p>
+                    <p class="text-red-100 text-xs font-semibold tracking-wider uppercase mt-1">Isócronas Tenerife</p>
                 </div>
             </div>
             
@@ -59,7 +59,8 @@
                 <div>
                     <h3 class="font-bold text-red-900 text-base mb-1">Cálculo de Tiempos Operacionales</h3>
                     <p class="text-xs text-red-800 leading-relaxed">Helicóptero EC-145 con base en Aeropuerto Tenerife Sur (TFS). Tiempos en condiciones meteorológicas normales.</p>
-                    <p class="text-xs text-red-800 mt-2 font-semibold">FÓRMULA: Movilización (4-7min) + Vuelo → Municipio + Vuelo → Hospital + Arranque Escena (3min)</p>
+                   <p class="text-xs text-red-800 mt-2 font-semibold">HEMS: Movilización (4-7min) + Vuelo → Municipio + Arranque Escena (3min) + Vuelo → Hospital</p>
+                   <p class="text-xs text-red-800 font-semibold">TERRESTRE: Movilización SVA (4min) + Base → Municipio + Municipio → Hospital</p>
                 </div>
             </div>
 
@@ -68,8 +69,8 @@
                 <div class="flex flex-col justify-between">
                     <div>
                         <h4 class="font-bold text-blue-900 text-sm mb-1">Referencia Temporal</h4>
-                        <p class="text-xs text-blue-800">Ambulancia SVA: distancia ÷ velocidad media en autopista/carreteras.</p>
-                        <p class="text-xs text-blue-800 mt-1">Hospitales: HUC (La Laguna) / HNSC (Santa Cruz)</p>
+                        <p class="text-xs text-blue-800">Tiempos terrestres SVA en tráfico fluido (mejor caso). En horas punta TF-5/TF-1 pueden duplicarse.</p>
+                        <p class="text-xs text-blue-800 mt-1">Hospitales: HUC (La Laguna) / HUNSC (Santa Cruz)</p>
                     </div>
                     <span class="text-[10px] font-bold text-blue-600 uppercase tracking-wider mt-2 block">Datos relativos para la toma de decisiones</span>
                 </div>
@@ -82,7 +83,7 @@
                 <p class="text-xs text-slate-500">Ajusta tiempo desde alerta hasta despegue.</p>
             </div>
             <label class="block text-sm font-semibold text-slate-700 mb-2 flex justify-between">
-                <span>Tiempo de Movilización (Ida):</span>
+                <span>Tiempo de Movilización HEMS:</span>
                 <span id="mobilization-val" class="text-[#D32F2F] font-bold">5 minutos</span>
             </label>
             <input type="range" id="mobilization-slider" min="4" max="7" value="5" step="1" class="w-full h-3 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#D32F2F] py-1">
@@ -104,7 +105,7 @@
             <div class="p-5 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 print-header">
                 <div>
                     <h3 class="text-lg font-bold text-slate-800">Isócronas HEMS Tenerife</h3>
-                    <p class="text-xs text-slate-500">30 municipios | Helicóptero EC-145 | Base TFS</p>
+                    <p class="text-xs text-slate-500">AH-40 | Helicóptero EC-145 | Base TFS</p>
                 </div>
                 <span class="bg-blue-100 text-blue-800 text-[11px] font-extrabold px-2.5 py-1 rounded-full border border-blue-200">+3 min Arranque Escena</span>
             </div>
@@ -116,7 +117,7 @@
                 <th class="p-2 sm:p-4 pl-3 sm:pl-6 bg-slate-100">Municipio</th>
                 <th class="p-2 sm:p-4 text-center bg-slate-100">TFS (min)</th>
                 <th class="p-2 sm:p-4 text-center bg-red-100/90 text-[#D32F2F]">Hosp (min)</th>
-                <th class="p-2 sm:p-4 text-center bg-slate-100">Terrestre (min)</th>
+                <th class="p-2 sm:p-4 text-center bg-slate-100">Total Terrestre</th>
                 <th class="p-2 sm:p-4 text-center bg-slate-200 font-extrabold text-slate-800">Total HEMS</th>
                 <th class="p-2 sm:p-4 text-right pr-3 sm:pr-6 bg-slate-100">Ahorro</th>
             </tr>
@@ -126,7 +127,8 @@
             </div>
 
             <div class="p-4 bg-slate-50 border-t border-slate-100 text-xs text-slate-600 space-y-2">
-                <p><strong>Leyenda columnas:</strong> TFS = Vuelo Aeropuerto→Municipio | Hosp = Vuelo Municipio→Hospital | Terrestre = Ambulancia SVA | Total HEMS = Movilización + TFS + Hosp + 3min arranque</p>
+                <p><strong>Leyenda columnas:</strong> TFS = Vuelo Aeropuerto→Municipio | Hosp = Vuelo Municipio→Hospital | Total Terrestre = Mov. SVA (4min) + Base→Municipio + Municipio→Hospital | Total HEMS = Movilización + TFS + 3min escena + Hosp</p>
+                <p><strong>Escenario:</strong> ambos totales miden el tiempo completo desde la alerta hasta la llegada al hospital de referencia. Criterio conservador: al HEMS se le imputan 3 min de arranque en escena; al SVA no se le imputa tiempo de escena. Tiempos terrestres en tráfico fluido (en hora punta el ahorro real del HEMS aumenta).</p>
                 <p><strong>Símbolos en "Ahorro":</strong></p>
                 <ul class="list-disc pl-5 space-y-1">
                     <li><span class="text-green-600 font-bold">+ N minutos</span> = HEMS es más rápido (N minutos de ahorro)</li>
@@ -191,7 +193,7 @@
     <footer class="bg-slate-900 text-slate-400 py-6 border-t border-slate-800 text-xs no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
             <span>&copy; 2026 Servicio de Urgencias Canario (SUC). Herramienta de Coordinacion Sanitaria.</span>
-            <span class="text-slate-500 font-bold uppercase tracking-wider">v2026.1 | Desarrollado por Airam Acosta</span>
+            <span class="text-slate-500 font-bold uppercase tracking-wider">v2026.2 | Desarrollado por Airam Acosta</span>
         </div>
     </footer>
 
@@ -202,41 +204,41 @@
             });
         }
 
-        const municipios = [
-            { nombre: "San Miguel", tfsMin: 4, tfsMax: 6, hospMin: 15, hospMax: 17, terrestre: 45 },
-            { nombre: "Arona", tfsMin: 3, tfsMax: 5, hospMin: 16, hospMax: 18, terrestre: 46 },
-            { nombre: "Granadilla", tfsMin: 2, tfsMax: 4, hospMin: 13, hospMax: 15, terrestre: 45 },
-            { nombre: "Arico", tfsMin: 4, tfsMax: 6, hospMin: 10, hospMax: 12, terrestre: 35 },
-            { nombre: "Fasnia", tfsMin: 6, tfsMax: 8, hospMin: 8, hospMax: 10, terrestre: 31 },
-            { nombre: "Güímar", tfsMin: 9, tfsMax: 11, hospMin: 6, hospMax: 8, terrestre: 22 },
-            { nombre: "Vilaflor", tfsMin: 6, tfsMax: 6, hospMin: 15, hospMax: 17, terrestre: 67 },
-            { nombre: "Adeje", tfsMin: 5, tfsMax: 7, hospMin: 16, hospMax: 18, terrestre: 50 },
-            { nombre: "Guía de Isora", tfsMin: 7, tfsMax: 9, hospMin: 17, hospMax: 19, terrestre: 74 },
-            { nombre: "Santiago del Teide", tfsMin: 8, tfsMax: 10, hospMin: 16, hospMax: 18, terrestre: 63 },
-            { nombre: "Buenavista/los Silos", tfsMin: 13, tfsMax: 15, hospMin: 14, hospMax: 16, terrestre: 60 },
-            { nombre: "Garachico", tfsMin: 15, tfsMax: 17, hospMin: 12, hospMax: 14, terrestre: 46 },
-            { nombre: "Icod", tfsMin: 15, tfsMax: 17, hospMin: 11, hospMax: 13, terrestre: 40 },
-            { nombre: "La Orotava", tfsMin: 15, tfsMax: 17, hospMin: 6, hospMax: 8, terrestre: 25 },
-            { nombre: "Arafo", tfsMin: 10, tfsMax: 12, hospMin: 5, hospMax: 7, terrestre: 20 },
-            { nombre: "Anaga", tfsMin: 22, tfsMax: 25, hospMin: 5, hospMax: 7, terrestre: 50 },
-            { nombre: "Parque Nacional", tfsMin: 9, tfsMax: 12, hospMin: 8, hospMax: 10, terrestre: 45 },
-            { nombre: "Puerto de la Cruz", tfsMin: 15, tfsMax: 17, hospMin: 6, hospMax: 8, terrestre: 23 },
-            { nombre: "Santa Cruz de Tenerife", tfsMin: 19, tfsMax: 19, hospMin: 1, hospMax: 1, terrestre: 8 },
-            { nombre: "San Cristóbal de La Laguna", tfsMin: 19, tfsMax: 19, hospMin: 1, hospMax: 1, terrestre: 5 },
-            { nombre: "Tacoronte", tfsMin: 20, tfsMax: 20, hospMin: 3, hospMax: 3, terrestre: 12 },
-            { nombre: "El Sauzal", tfsMin: 18, tfsMax: 20, hospMin: 4, hospMax: 4, terrestre: 15 },
-            { nombre: "La Matanza", tfsMin: 17, tfsMax: 19, hospMin: 4, hospMax: 4, terrestre: 16 },
-            { nombre: "La Victoria", tfsMin: 17, tfsMax: 19, hospMin: 5, hospMax: 5, terrestre: 17 },
-            { nombre: "Santa Úrsula", tfsMin: 16, tfsMax: 18, hospMin: 6, hospMax: 6, terrestre: 18 },
-            { nombre: "Los Realejos", tfsMin: 17, tfsMax: 17, hospMin: 7, hospMax: 9, terrestre: 26 },
-            { nombre: "Candelaria", tfsMin: 10, tfsMax: 12, hospMin: 5, hospMax: 7, terrestre: 16 },
-            { nombre: "El Rosario", tfsMin: 15, tfsMax: 15, hospMin: 3, hospMax: 3, terrestre: 12 },
-            { nombre: "San Juan de la Rambla", tfsMin: 17, tfsMax: 17, hospMin: 9, hospMax: 11, terrestre: 32 },
-            { nombre: "El Tanque", tfsMin: 13, tfsMax: 15, hospMin: 14, hospMax: 16, terrestre: 44 }
-        ];
-
+   const municipios = [
+    { nombre: "San Miguel", baseMun: 22, munHosp: 48, tfsMin: 4, tfsMax: 6, hospMin: 15, hospMax: 17 },
+    { nombre: "Arona", baseMun: 8, munHosp: 45, tfsMin: 3, tfsMax: 5, hospMin: 16, hospMax: 18 },
+    { nombre: "Granadilla", baseMun: 25, munHosp: 42, tfsMin: 2, tfsMax: 4, hospMin: 13, hospMax: 15 },
+    { nombre: "Arico", baseMun: 34, munHosp: 34, tfsMin: 4, tfsMax: 6, hospMin: 10, hospMax: 12 },
+    { nombre: "Fasnia", baseMun: 32, munHosp: 32, tfsMin: 6, tfsMax: 8, hospMin: 8, hospMax: 10 },
+    { nombre: "Güímar", baseMun: 23, munHosp: 23, tfsMin: 9, tfsMax: 11, hospMin: 6, hospMax: 8 },
+    { nombre: "Vilaflor", baseMun: 35, munHosp: 58, tfsMin: 6, tfsMax: 6, hospMin: 15, hospMax: 17 },
+    { nombre: "Adeje", baseMun: 14, munHosp: 52, tfsMin: 5, tfsMax: 7, hospMin: 16, hospMax: 18 },
+    { nombre: "Guía de Isora", baseMun: 21, munHosp: 65, tfsMin: 7, tfsMax: 9, hospMin: 17, hospMax: 19 },
+    { nombre: "Santiago del Teide", baseMun: 25, munHosp: 70, tfsMin: 8, tfsMax: 10, hospMin: 16, hospMax: 18 },
+    { nombre: "Buenavista/los Silos", baseMun: 44, munHosp: 55, tfsMin: 13, tfsMax: 15, hospMin: 14, hospMax: 16 },
+    { nombre: "Garachico", baseMun: 33, munHosp: 47, tfsMin: 15, tfsMax: 17, hospMin: 12, hospMax: 14 },
+    { nombre: "Icod", baseMun: 28, munHosp: 38, tfsMin: 15, tfsMax: 17, hospMin: 11, hospMax: 13 },
+    { nombre: "La Orotava", baseMun: 15, munHosp: 21, tfsMin: 15, tfsMax: 17, hospMin: 6, hospMax: 8 },
+    { nombre: "Arafo", baseMun: 27, munHosp: 27, tfsMin: 10, tfsMax: 12, hospMin: 5, hospMax: 7 },
+    { nombre: "Anaga (Taganana)", baseMun: 49, munHosp: 49, tfsMin: 22, tfsMax: 25, hospMin: 5, hospMax: 7 },
+    { nombre: "Parque Nacional", baseMun: 55, munHosp: 45, tfsMin: 9, tfsMax: 12, hospMin: 8, hospMax: 10 },
+    { nombre: "Puerto de la Cruz", baseMun: 5, munHosp: 24, tfsMin: 15, tfsMax: 17, hospMin: 6, hospMax: 8 },
+    { nombre: "Santa Cruz de Tenerife", baseMun: 7, munHosp: 7, tfsMin: 19, tfsMax: 19, hospMin: 1, hospMax: 1 },
+    { nombre: "San Cristóbal de La Laguna", baseMun: 5, munHosp: 5, tfsMin: 19, tfsMax: 19, hospMin: 1, hospMax: 1 },
+    { nombre: "Tacoronte", baseMun: 14, munHosp: 14, tfsMin: 20, tfsMax: 20, hospMin: 3, hospMax: 3 },
+    { nombre: "El Sauzal", baseMun: 17, munHosp: 17, tfsMin: 18, tfsMax: 20, hospMin: 4, hospMax: 4 },
+    { nombre: "La Matanza", baseMun: 17, munHosp: 17, tfsMin: 17, tfsMax: 19, hospMin: 4, hospMax: 4 },
+    { nombre: "La Victoria", baseMun: 19, munHosp: 19, tfsMin: 17, tfsMax: 19, hospMin: 5, hospMax: 5 },
+    { nombre: "Santa Úrsula", baseMun: 15, munHosp: 19, tfsMin: 16, tfsMax: 18, hospMin: 6, hospMax: 6 },
+    { nombre: "Los Realejos", baseMun: 14, munHosp: 26, tfsMin: 17, tfsMax: 17, hospMin: 7, hospMax: 9 },
+    { nombre: "Candelaria", baseMun: 15, munHosp: 15, tfsMin: 10, tfsMax: 12, hospMin: 5, hospMax: 7 },
+    { nombre: "El Rosario", baseMun: 10, munHosp: 10, tfsMin: 15, tfsMax: 15, hospMin: 3, hospMax: 3 },
+    { nombre: "San Juan de la Rambla", baseMun: 18, munHosp: 32, tfsMin: 17, tfsMax: 17, hospMin: 9, hospMax: 11 },
+    { nombre: "El Tanque", baseMun: 30, munHosp: 42, tfsMin: 13, tfsMax: 15, hospMin: 14, hospMax: 16 }
+];
         let currentMobilization = 5;
         const currentStartupBack = 3;
+        const MOV_SVA = 4; // Movilización SVA terrestre (alerta → salida de base)
         const slider = document.getElementById('mobilization-slider');
         const mobilizationVal = document.getElementById('mobilization-val');
         const isocronasTbody = document.getElementById('isocronas-tbody');
@@ -267,7 +269,8 @@
                 const tfsMedio = calcularMedia(item.tfsMin, item.tfsMax);
                 const hospMedio = calcularMedia(item.hospMin, item.hospMax);
                 const totalHemsTime = currentMobilization + tfsMedio + hospMedio + currentStartupBack;
-                const timeSaved = item.terrestre - totalHemsTime;
+const totalTerrestre = MOV_SVA + item.baseMun + item.munHosp;
+const timeSaved = totalTerrestre - totalHemsTime;
                 
                 let savingClass = '';
                 let savingText = '';
@@ -286,13 +289,13 @@
                 const tr = document.createElement('tr');
                 tr.className = "hover:bg-slate-50/80 transition-colors text-xs sm:text-sm";
                 tr.innerHTML = `
-                    <td class="p-2 sm:p-4 pl-3 sm:pl-6 font-semibold text-slate-800 truncate">${item.nombre}</td>
-                    <td class="p-2 sm:p-4 text-center text-slate-600">${tfsMedio}</td>
-                    <td class="p-2 sm:p-4 text-center bg-red-50/50 text-[#D32F2F]">${hospMedio}</td>
-                    <td class="p-2 sm:p-4 text-center text-slate-600">${item.terrestre}</td>
-                    <td class="p-2 sm:p-4 text-center bg-slate-100 font-black">${totalHemsTime}</td>
-                    <td class="p-2 sm:p-4 text-right pr-3 sm:pr-6"><span class="text-[10px] px-2 py-1 rounded border ${savingClass}">${savingText}</span></td>
-                `;
+    <td class="p-2 sm:p-4 pl-3 sm:pl-6 font-semibold text-slate-800 truncate">${item.nombre}</td>
+    <td class="p-2 sm:p-4 text-center text-slate-600">${tfsMedio}</td>
+    <td class="p-2 sm:p-4 text-center bg-red-50/50 text-[#D32F2F]">${hospMedio}</td>
+    <td class="p-2 sm:p-4 text-center text-slate-600">${totalTerrestre}</td>
+    <td class="p-2 sm:p-4 text-center bg-slate-100 font-black">${totalHemsTime}</td>
+    <td class="p-2 sm:p-4 text-right pr-3 sm:pr-6"><span class="text-[10px] px-2 py-1 rounded border ${savingClass}">${savingText}</span></td>
+`;
                 isocronasTbody.appendChild(tr);
             });
             if (window.lucide) window.lucide.createIcons();
