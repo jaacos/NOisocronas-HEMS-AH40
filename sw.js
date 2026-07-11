@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'suc-hems-v21';
+const CACHE_VERSION = 'suc-hems-v22';
 const CACHE_NAME = `${CACHE_VERSION}`;
 const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
 const CDN_CACHE = `${CACHE_VERSION}-cdn`;
