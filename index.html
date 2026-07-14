@@ -309,6 +309,21 @@ tbody tr:last-child td{border-bottom:none}
 #mapa-svg .mz.sel{stroke:var(--ink);stroke-width:3}
 #mapa-svg .mz.dim{opacity:.2}
 
+/* Zonas especiales (no municipales): círculos simbólicos */
+#mapa-svg .ze{cursor:pointer}
+#mapa-svg .ze-c{
+  fill:currentColor;fill-opacity:.55;
+  stroke:var(--surface);stroke-width:2.5;stroke-dasharray:7 5;
+  transition:fill-opacity .12s;
+}
+#mapa-svg .ze-h{fill:none;stroke:none;pointer-events:all}
+#mapa-svg .ze.v-ok{color:var(--map-ok)}
+#mapa-svg .ze.v-eq{color:var(--map-eq)}
+#mapa-svg .ze.v-bad{color:var(--map-bad)}
+#mapa-svg .ze:hover .ze-c{fill-opacity:.75}
+#mapa-svg .ze.sel .ze-c{stroke:var(--ink);stroke-width:3.5;fill-opacity:.8}
+#mapa-svg .ze.dim{opacity:.2}
+
 /* Marcadores: base HEMS y hospitales */
 #mapa-svg .poi{pointer-events:none}
 #mapa-svg .poi circle{stroke:#fff;stroke-width:2.5}
@@ -335,6 +350,7 @@ tbody tr:last-child td{border-bottom:none}
 .lg-sw{width:16px;height:16px;border-radius:5px;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
 .lg-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .lg-sep{height:1px;background:var(--line);margin:9px 0}
+.lg-circ{width:16px;height:16px;border-radius:50%;flex-shrink:0;background:var(--ink-3);opacity:.5;border:2px dashed var(--surface);box-sizing:border-box}
 .md-note{margin:9px 0 0;padding-top:8px;border-top:1px dashed var(--line);font-size:.72rem;color:var(--ink-3);line-height:1.45}
 .md-note b{color:var(--ink-2)}
 
@@ -511,6 +527,10 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 <path class="mz" data-mun="La Victoria" data-nom="La Victoria de Acentejo" d="M541.4 240.7 L546.2 237.0 L554.7 236.3 L557.6 232.8 L584.6 243.4 L599.3 253.1 L614.3 255.4 L618.7 257.8 L626.9 270.6 L624.4 278.9 L621.1 280.3 L617.4 287.8 L617.7 296.2 L606.3 298.8 L595.7 304.6 L591.4 295.2 L578.2 282.9 L572.8 270.5 L572.8 265.4 L562.5 256.2 L555.3 253.5 L551.2 255.8 L542.6 245.3 L541.4 240.7 Z"><title>La Victoria de Acentejo</title></path>
 <path class="mz" data-mun="Vilaflor" data-nom="Vilaflor de Chasna" d="M304.7 673.6 L302.0 671.2 L301.4 661.0 L299.5 660.2 L301.4 648.3 L310.7 629.5 L312.6 620.9 L317.0 613.1 L317.0 609.0 L324.3 600.4 L333.9 563.4 L353.7 567.4 L361.5 565.3 L380.2 555.7 L381.2 548.9 L384.2 546.4 L382.5 563.2 L388.8 570.8 L390.4 582.6 L389.5 597.2 L393.1 603.7 L386.8 620.9 L391.3 630.2 L386.6 638.6 L383.2 638.9 L381.0 642.0 L381.9 660.5 L376.1 666.6 L356.9 679.6 L356.2 695.5 L334.6 684.0 L318.3 684.8 L304.7 673.6 Z"><title>Vilaflor de Chasna</title></path>
 </g>
+<g id="zonas-esp">
+<g class="ze" data-mun="Parque Nacional" data-nom="P.N. del Teide"><title>P.N. del Teide</title><circle class="ze-c" cx="398.9" cy="471.2" r="73.6"/><circle class="ze-h" cx="398.9" cy="471.2" r="73.6"/></g>
+<g class="ze" data-mun="Anaga (Taganana)" data-nom="Macizo de Anaga"><title>Macizo de Anaga</title><circle class="ze-c" cx="875.6" cy="89.8" r="49.1"/><circle class="ze-h" cx="875.6" cy="89.8" r="49.1"/></g>
+</g>
 <g id="pois">
 <g class="poi poi-heli" transform="translate(439.6,777.6)"><title>Base HEMS · TFS</title><circle r="13"/><path d="M -6 -1 L 6 -1 M 0 -1 L 0 4 M -4 4 L 4 4 M -7 -5 L 7 -5" stroke="#fff" stroke-width="1.8" fill="none" stroke-linecap="round"/></g>
 <g class="poi poi-hosp" transform="translate(742.8,198.4)"><title>HUC · La Laguna</title><circle r="11"/><path d="M 0 -5 L 0 5 M -5 0 L 5 0" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></g>
@@ -525,6 +545,8 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
           <div class="lg-row"><span class="lg-sw" style="background:var(--map-eq)"></span> Equivalente <span id="lg-n-eq" style="margin-left:auto;font-weight:800;color:var(--ink)"></span></div>
           <div class="lg-row"><span class="lg-sw" style="background:var(--map-bad)"></span> Gana SVA terrestre <span id="lg-n-bad" style="margin-left:auto;font-weight:800;color:var(--ink)"></span></div>
           <div class="lg-sep"></div>
+          <div class="lg-row"><span class="lg-circ"></span> Zona no municipal (Teide / Anaga)</div>
+          <div class="lg-sep"></div>
           <div class="lg-row"><span class="lg-dot" style="background:var(--suc)"></span> Base HEMS (TFS)</div>
           <div class="lg-row"><span class="lg-dot" style="background:#1F3A5F"></span> Hospitales (HUC / HUNSC)</div>
         </div>
@@ -535,7 +557,8 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
     </div>
     <div class="legend" style="border:1px solid var(--line);border-top:none;border-radius:0 0 var(--radius) var(--radius);margin-top:-1px">
       <p style="margin:0"><b>Cartografía:</b> límites municipales oficiales (INE). El color se recalcula automáticamente al mover el deslizador de movilización, en sincronía con la tabla.</p>
-        <p style="margin:0"><b>Notas:</b> <i>Tegueste</i> y <i>La Guancha</i> no disponen de tiempos propios medidos y muestran, por equivalencia operativa, los de La Laguna e Icod respectivamente (aparecen atenuados). <i>Anaga</i> y <i>Parque Nacional</i> no son municipios —son zonas repartidas entre varios términos— por lo que no figuran en el mapa, pero <b>sí en la tabla</b>, que sigue siendo la referencia completa.</p>
+        <p style="margin:0"><b>Zonas no municipales:</b> el <i>Parque Nacional del Teide</i> y el <i>Macizo de Anaga</i> se reparten entre varios términos municipales, por lo que no tienen límite administrativo propio. Se representan con un <b>círculo de trazo discontinuo</b> —deliberadamente simbólico, no una frontera real— centrado en la zona y dimensionado a escala. Son clicables y tienen sus propios tiempos, como en la tabla.</p>
+        <p style="margin:0"><b>Datos heredados:</b> <i>Tegueste</i> y <i>La Guancha</i> no disponen de tiempos propios medidos y muestran, por equivalencia operativa, los de La Laguna e Icod respectivamente (aparecen atenuados).</p>
     </div>
   </section>
 
@@ -644,7 +667,7 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 <footer>
   <div class="wrap">
     <span>© 2026 Servicio de Urgencias Canario (SUC) · Herramienta de apoyo a la coordinación sanitaria. Datos orientativos para la toma de decisiones.</span>
-    <span class="ver">v3.2 · Airam Acosta</span>
+    <span class="ver">v3.3 · Airam Acosta</span>
   </div>
 </footer>
 
@@ -746,6 +769,8 @@ function escapeHtml(s){
 const mapSvg    = document.getElementById("mapa-svg");
 const mapDetail = document.getElementById("map-detail");
 const zonas     = mapSvg ? Array.from(mapSvg.querySelectorAll(".mz")) : [];
+const zonasEsp  = mapSvg ? Array.from(mapSvg.querySelectorAll(".ze")) : [];
+const todas     = zonas.concat(zonasEsp);   // municipios + zonas especiales
 const porNombre = Object.fromEntries(municipios.map(m => [m.nombre, m]));
 let selectedNom = null;   // nombre oficial seleccionado
 let selectedDato = null;  // entrada de datos correspondiente
@@ -782,6 +807,26 @@ function renderMapa(){
     z.classList.toggle("sel", nom === selectedNom);
   });
 
+  // Zonas especiales (Teide, Anaga): mismo cálculo, mismo veredicto
+  zonasEsp.forEach(z => {
+    const dato = z.dataset.mun;
+    const nom  = z.dataset.nom;
+    const m = porNombre[dato];
+    if (!m) return;
+    const c = calcular(m);
+
+    z.classList.remove("v-ok","v-eq","v-bad");
+    z.classList.add(claseVeredicto(c.ahorro));
+
+    if (c.ahorro > 0) nOk++; else if (c.ahorro === 0) nEq++; else nBad++;
+
+    const coincide = !filtro
+      || nom.toLowerCase().includes(filtro)
+      || dato.toLowerCase().includes(filtro);
+    z.classList.toggle("dim", !coincide);
+    z.classList.toggle("sel", nom === selectedNom);
+  });
+
   document.getElementById("lg-n-ok").textContent  = nOk;
   document.getElementById("lg-n-eq").textContent  = nEq;
   document.getElementById("lg-n-bad").textContent = nBad;
@@ -798,7 +843,7 @@ function renderDetalle(nom, dato){
   else if (c.ahorro === 0) chip = '<span class="verdict eq">Tiempos equivalentes</span>';
   else                     chip = '<span class="verdict bad">SVA −' + Math.abs(c.ahorro) + ' min</span>';
 
-  const zona = zonas.find(z => z.dataset.nom === nom);
+  const zona = todas.find(z => z.dataset.nom === nom);
   const hereda = zona && zona.hasAttribute("data-hereda");
   const nota = hereda
     ? '<p class="md-note">Sin tiempos propios medidos. Muestra los de <b>' + escapeHtml(dato) + '</b> por equivalencia operativa.</p>'
@@ -814,7 +859,7 @@ function renderDetalle(nom, dato){
     + nota;
 }
 
-zonas.forEach(z => {
+todas.forEach(z => {
   z.addEventListener("click", () => {
     if (selectedNom === z.dataset.nom){
       selectedNom = null; selectedDato = null;
