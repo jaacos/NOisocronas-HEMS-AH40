@@ -309,19 +309,22 @@ tbody tr:last-child td{border-bottom:none}
 #mapa-svg .mz.sel{stroke:var(--ink);stroke-width:3}
 #mapa-svg .mz.dim{opacity:.2}
 
-/* Zonas especiales (no municipales): círculos simbólicos */
+/* Zonas especiales (no municipales): círculos simbólicos.
+   Relleno = color del veredicto (translúcido, deja ver la isla debajo).
+   Borde y halo = naranja pastel, para que destaquen como zonas de alta rentabilidad HEMS. */
 #mapa-svg .ze{cursor:pointer}
 #mapa-svg .ze-c{
-  fill:currentColor;fill-opacity:.55;
-  stroke:var(--surface);stroke-width:2.5;stroke-dasharray:7 5;
-  transition:fill-opacity .12s;
+  fill:currentColor;fill-opacity:.42;
+  stroke:var(--zona-naranja);stroke-width:4;stroke-dasharray:9 6;stroke-linecap:round;
+  transition:fill-opacity .12s, stroke-width .12s;
+  filter:drop-shadow(0 0 7px var(--zona-halo));
 }
 #mapa-svg .ze-h{fill:none;stroke:none;pointer-events:all}
 #mapa-svg .ze.v-ok{color:var(--map-ok)}
 #mapa-svg .ze.v-eq{color:var(--map-eq)}
 #mapa-svg .ze.v-bad{color:var(--map-bad)}
-#mapa-svg .ze:hover .ze-c{fill-opacity:.75}
-#mapa-svg .ze.sel .ze-c{stroke:var(--ink);stroke-width:3.5;fill-opacity:.8}
+#mapa-svg .ze:hover .ze-c{fill-opacity:.6;stroke-width:5}
+#mapa-svg .ze.sel .ze-c{stroke:var(--ink);stroke-width:4.5;fill-opacity:.7}
 #mapa-svg .ze.dim{opacity:.2}
 
 /* Marcadores: base HEMS y hospitales */
@@ -334,9 +337,11 @@ tbody tr:last-child td{border-bottom:none}
   #mapa-svg .poi-hosp circle{fill:#5B8DBE}
 }
 
-:root{--map-ok:#7DBF95;--map-eq:#C9C4BA;--map-bad:#5B8DBE;}
+:root{--map-ok:#7DBF95;--map-eq:#C9C4BA;--map-bad:#5B8DBE;
+  --zona-naranja:#F0A868;--zona-halo:rgba(240,168,104,.55);}
 @media (prefers-color-scheme: dark){
-  :root{--map-ok:#3E7D58;--map-eq:#4A5158;--map-bad:#3A6389;}
+  :root{--map-ok:#3E7D58;--map-eq:#4A5158;--map-bad:#3A6389;
+    --zona-naranja:#E39A5C;--zona-halo:rgba(227,154,92,.45);}
 }
 
 /* Panel lateral de detalle */
@@ -350,7 +355,7 @@ tbody tr:last-child td{border-bottom:none}
 .lg-sw{width:16px;height:16px;border-radius:5px;flex-shrink:0;border:1px solid rgba(0,0,0,.12)}
 .lg-dot{width:13px;height:13px;border-radius:50%;flex-shrink:0;border:2px solid var(--surface);box-shadow:0 0 0 1px rgba(0,0,0,.15)}
 .lg-sep{height:1px;background:var(--line);margin:9px 0}
-.lg-circ{width:16px;height:16px;border-radius:50%;flex-shrink:0;background:var(--ink-3);opacity:.5;border:2px dashed var(--surface);box-sizing:border-box}
+.lg-circ{width:16px;height:16px;border-radius:50%;flex-shrink:0;background:var(--map-ok);border:2px dashed var(--zona-naranja);box-sizing:border-box;box-shadow:0 0 5px var(--zona-halo)}
 .md-note{margin:9px 0 0;padding-top:8px;border-top:1px dashed var(--line);font-size:.72rem;color:var(--ink-3);line-height:1.45}
 .md-note b{color:var(--ink-2)}
 
@@ -528,7 +533,7 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 <path class="mz" data-mun="Vilaflor" data-nom="Vilaflor de Chasna" d="M304.7 673.6 L302.0 671.2 L301.4 661.0 L299.5 660.2 L301.4 648.3 L310.7 629.5 L312.6 620.9 L317.0 613.1 L317.0 609.0 L324.3 600.4 L333.9 563.4 L353.7 567.4 L361.5 565.3 L380.2 555.7 L381.2 548.9 L384.2 546.4 L382.5 563.2 L388.8 570.8 L390.4 582.6 L389.5 597.2 L393.1 603.7 L386.8 620.9 L391.3 630.2 L386.6 638.6 L383.2 638.9 L381.0 642.0 L381.9 660.5 L376.1 666.6 L356.9 679.6 L356.2 695.5 L334.6 684.0 L318.3 684.8 L304.7 673.6 Z"><title>Vilaflor de Chasna</title></path>
 </g>
 <g id="zonas-esp">
-<g class="ze" data-mun="Parque Nacional" data-nom="P.N. del Teide"><title>P.N. del Teide</title><circle class="ze-c" cx="398.9" cy="471.2" r="73.6"/><circle class="ze-h" cx="398.9" cy="471.2" r="73.6"/></g>
+<g class="ze" data-mun="Parque Nacional" data-nom="P.N. del Teide"><title>P.N. del Teide</title><circle class="ze-c" cx="382.5" cy="483.2" r="49.6"/><circle class="ze-h" cx="382.5" cy="483.2" r="49.6"/></g>
 <g class="ze" data-mun="Anaga (Taganana)" data-nom="Macizo de Anaga"><title>Macizo de Anaga</title><circle class="ze-c" cx="875.6" cy="89.8" r="49.1"/><circle class="ze-h" cx="875.6" cy="89.8" r="49.1"/></g>
 </g>
 <g id="pois">
@@ -667,7 +672,7 @@ footer .ver{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 <footer>
   <div class="wrap">
     <span>© 2026 Servicio de Urgencias Canario (SUC) · Herramienta de apoyo a la coordinación sanitaria. Datos orientativos para la toma de decisiones.</span>
-    <span class="ver">v3.3 · Airam Acosta</span>
+    <span class="ver">v3.4 · Airam Acosta</span>
   </div>
 </footer>
 
