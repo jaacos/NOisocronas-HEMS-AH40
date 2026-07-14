@@ -1,217 +1,87 @@
-const CACHE_VERSION = 'suc-hems-v23';
-const CACHE_NAME = `${CACHE_VERSION}`;
-const RUNTIME_CACHE = `${CACHE_VERSION}-runtime`;
-const CDN_CACHE = `${CACHE_VERSION}-cdn`;
+/* ============================================================
+   SUC HEMS AH-40 · Service Worker
+   v3.0 — Rutas relativas (compatible con GitHub Pages).
+   Sin dependencias externas: todo lo necesario se cachea aquí.
+   Para forzar una actualización en todos los dispositivos,
+   sube los cambios y aumenta el número de versión de abajo.
+   ============================================================ */
+const CACHE_VERSION = "suc-hems-v31";
 
-// Archivos críticos a cachear en instalación
-const CRITICAL_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json'
+const ASSETS = [
+  "./",
+  "./index.html",
+  "./manifest.json",
+  "./logo-suc.png",
+  "./logo-hems.png",
+  "./icon-192.png",
+  "./icon-512.png",
+  "./icon-192-maskable.png",
+  "./icon-512-maskable.png",
+  "./apple-touch-icon.png"
 ];
 
-// CDNs a cachear dinámicamente
-const CDN_URLS = [
-  'https://cdn.tailwindcss.com',
-  'https://unpkg.com/lucide@latest',
-  'https://fonts.googleapis.com'
-];
-
-// ============================================================================
-// EVENTO: INSTALL - Cachea archivos críticos
-// ============================================================================
-self.addEventListener('install', event => {
-  console.log('[SW] Instalando Service Worker...');
-  
+/* INSTALL: precachea todos los recursos de la app */
+self.addEventListener("install", event => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('[SW] Cacheando archivos críticos');
-        return cache.addAll(CRITICAL_ASSETS);
-      })
-      .then(() => {
-        console.log('[SW] Salteando workers anteriores');
-        return self.skipWaiting();
-      })
-      .catch(error => {
-        console.error('[SW] Error durante instalación:', error);
-      })
+    caches.open(CACHE_VERSION)
+      .then(cache => cache.addAll(ASSETS))
+      .then(() => self.skipWaiting())
   );
 });
 
-// ============================================================================
-// EVENTO: ACTIVATE - Limpia cachés antiguos
-// ============================================================================
-self.addEventListener('activate', event => {
-  console.log('[SW] Activando Service Worker...');
-  
+/* ACTIVATE: elimina versiones de caché antiguas */
+self.addEventListener("activate", event => {
   event.waitUntil(
     caches.keys()
-      .then(cacheNames => {
-        return Promise.all(
-          cacheNames
-            .filter(cacheName => !cacheName.startsWith(CACHE_VERSION))
-            .map(cacheName => {
-              console.log('[SW] Eliminando caché antigua:', cacheName);
-              return caches.delete(cacheName);
-            })
-        );
-      })
-      .then(() => {
-        console.log('[SW] Reclamando clientes...');
-        return self.clients.claim();
-      })
+      .then(keys => Promise.all(
+        keys.filter(k => k !== CACHE_VERSION).map(k => caches.delete(k))
+      ))
+      .then(() => self.clients.claim())
   );
 });
 
-// ============================================================================
-// EVENTO: FETCH - Estrategia offline-first con fallbacks
-// ============================================================================
-self.addEventListener('fetch', event => {
-  const { request } = event;
-  const url = new URL(request.url);
+/* FETCH:
+   - Navegación (HTML): red primero, caché si no hay conexión.
+     Así las actualizaciones llegan en cuanto hay red, pero la
+     app abre siempre, incluso sin cobertura.
+   - Resto (imágenes, manifest): caché primero, red de respaldo. */
+self.addEventListener("fetch", event => {
+  const req = event.request;
+  if (req.method !== "GET") return;
 
-  // Ignorar navegaciones a otros orígenes
-  if (url.origin !== location.origin) {
+  const url = new URL(req.url);
+  if (url.origin !== location.origin) return; // no hay recursos externos
+
+  if (req.mode === "navigate" || url.pathname.endsWith("index.html")) {
+    event.respondWith(
+      fetch(req)
+        .then(res => {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then(c => c.put(req, copy));
+          return res;
+        })
+        .catch(() =>
+          caches.match(req).then(hit => hit || caches.match("./index.html"))
+        )
+    );
     return;
   }
 
-  // Rutas estáticas: Network first, fallback a caché
-  if (request.method === 'GET') {
-    // CDN y recursos externos: Cache first
-    if (isCDNRequest(request.url)) {
-      event.respondWith(cacheFirstStrategy(request, CDN_CACHE));
-      return;
-    }
-
-    // HTML, CSS, JS: Network first, fallback a caché
-    event.respondWith(networkFirstStrategy(request, RUNTIME_CACHE));
-    return;
-  }
-
-  // POST y otros métodos: Solo network
-  event.respondWith(fetch(request));
+  event.respondWith(
+    caches.match(req).then(hit =>
+      hit ||
+      fetch(req).then(res => {
+        if (res && res.status === 200) {
+          const copy = res.clone();
+          caches.open(CACHE_VERSION).then(c => c.put(req, copy));
+        }
+        return res;
+      })
+    )
+  );
 });
 
-// ============================================================================
-// ESTRATEGIAS DE CACHING
-// ============================================================================
-
-/**
- * Network First: Intenta red primero, fallback a caché
- * Ideal para: HTML, datos dinámicos
- */
-function networkFirstStrategy(request, cacheName) {
-  return fetch(request)
-    .then(response => {
-      // Cachea respuestas exitosas
-      if (!response || response.status !== 200 || response.type !== 'basic') {
-        return response;
-      }
-
-      const responseToCache = response.clone();
-      caches.open(cacheName)
-        .then(cache => {
-          cache.put(request, responseToCache);
-        })
-        .catch(error => {
-          console.log('[SW] Error cacheando en network-first:', error);
-        });
-
-      return response;
-    })
-    .catch(() => {
-      // Fallback a caché si falla la red
-      return caches.match(request)
-        .then(cachedResponse => {
-          if (cachedResponse) {
-            console.log('[SW] Sirviendo desde caché:', request.url);
-            return cachedResponse;
-          }
-          // Fallback final: página offline (si existe)
-          if (request.destination === 'document') {
-            return caches.match('/index.html');
-          }
-          return new Response('Sin conexión. Reintenta cuando tengas disponibilidad.', {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: new Headers({
-              'Content-Type': 'text/plain; charset=utf-8'
-            })
-          });
-        });
-    });
-}
-
-/**
- * Cache First: Intenta caché primero, fallback a red
- * Ideal para: Recursos estáticos, CDNs
- */
-function cacheFirstStrategy(request, cacheName) {
-  return caches.match(request)
-    .then(cachedResponse => {
-      if (cachedResponse) {
-        console.log('[SW] Sirviendo desde caché (cache-first):', request.url);
-        return cachedResponse;
-      }
-
-      return fetch(request)
-        .then(response => {
-          // No cachea respuestas inválidas
-          if (!response || response.status !== 200) {
-            return response;
-          }
-
-          const responseToCache = response.clone();
-          caches.open(cacheName)
-            .then(cache => {
-              cache.put(request, responseToCache);
-            })
-            .catch(error => {
-              console.log('[SW] Error cacheando en cache-first:', error);
-            });
-
-          return response;
-        })
-        .catch(() => {
-          console.log('[SW] Sin red y sin caché para:', request.url);
-          return new Response('Recurso no disponible.', {
-            status: 503,
-            statusText: 'Service Unavailable'
-          });
-        });
-    });
-}
-
-// ============================================================================
-// UTILIDADES
-// ============================================================================
-
-/**
- * Detecta si una solicitud es a un CDN
- */
-function isCDNRequest(url) {
-  return CDN_URLS.some(cdnUrl => url.includes(cdnUrl)) ||
-         url.includes('unpkg.com') ||
-         url.includes('cdn.tailwindcss.com') ||
-         url.includes('fonts.googleapis.com') ||
-         url.includes('fonts.gstatic.com');
-}
-
-// ============================================================================
-// NOTIFICACIONES AL CLIENTE
-// ============================================================================
-
-/**
- * Mensajes de debug (opcional)
- */
-self.addEventListener('message', event => {
-  if (event.data && event.data.type === 'SKIP_WAITING') {
-    self.skipWaiting();
-  }
-  if (event.data && event.data.type === 'GET_VERSION') {
-    event.ports[0].postMessage({ version: CACHE_VERSION });
-  }
+/* Mensajes desde la página (actualización manual) */
+self.addEventListener("message", event => {
+  if (event.data && event.data.type === "SKIP_WAITING") self.skipWaiting();
 });
-
-console.log('[SW] Service Worker cargado - Versión:', CACHE_VERSION);
